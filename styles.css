@@ -296,13 +296,82 @@ a:hover,
 /* Hero */
 .hero {
     min-height: 100vh;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
     align-items: center;
     padding-top: 80px;
 }
 
 .hero-content {
     max-width: 800px;
+}
+
+.hero-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-image-frame {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.hero-image-frame::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent,
+        transparent,
+        transparent,
+        var(--accent)
+    );
+    animation: rotateFrame 4s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-image {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    background: var(--bg-dark);
+}
+
+.hero-image-frame:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 45px rgba(0, 189, 215, 0.7);
+    border-color: #ffffff;
+}
+
+@keyframes rotateFrame {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .badge {
@@ -889,6 +958,23 @@ a:hover,
 
 /* Responsive */
 @media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+        padding-top: 120px;
+        padding-bottom: 40px;
+    }
+
+    .hero-image-container {
+        order: -1;
+    }
+
+    .hero-image-frame {
+        width: 240px;
+        height: 240px;
+    }
+
     .hero-title {
         font-size: 3.5rem;
     }
